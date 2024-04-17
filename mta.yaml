@@ -1,0 +1,152 @@
+_schema-version: "3.1"
+ID: invoiceauto
+description: A simple CAP project.
+version: 1.0.0
+modules:
+- name: invoiceauto-srv
+  type: nodejs
+  path: gen/srv
+  requires:
+  - name: invoiceauto-db
+  - name: uaa_invoiceauto
+  - name: cpapp-connectivity
+  - name: invoiceauto-destination-service
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    buildpack: nodejs_buildpack
+    readiness-health-check-http-endpoint: /health
+    readiness-health-check-type: http
+  build-parameters:
+    builder: npm
+- name: invoiceauto-db-deployer
+  type: hdb
+  path: gen/db
+  requires:
+  - name: invoiceauto-db
+  parameters:
+    buildpack: nodejs_buildpack
+- name: invoiceauto-approuter
+  type: approuter.nodejs
+  path: invoiceauto-approuter
+  requires:
+  - name: invoiceauto_html_repo_runtime
+  - name: uaa_invoiceauto
+  - name: cpapp-connectivity
+  - name: srv-api
+    group: destinations
+    properties:
+      forwardAuthToken: true
+      name: srv-api
+      strictSSL: false
+      url: ~{srv-url}
+  - name: invoiceauto-destination-service
+    group: destinations
+    properties:
+      forwardAuthToken: false
+      name: ui5
+      url: https://ui5.sap.com
+  - name: DataIntelligence-flp
+  parameters:
+    disk-quota: 256M
+    memory: 256M
+- name: invoiceauto_ui_deployer
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: invoiceauto_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - autoinvoicedashboard.zip
+      name: autoinvoicedashboard
+      target-path: resources/
+- name: autoinvoicedashboard
+  type: html5
+  path: app/autoinvoicedashboard
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: flp
+  type: com.sap.application.content
+  path: flp
+  requires:
+  - name: DataIntelligence-flp
+    parameters:
+      content-target: true
+      service-key:
+        config:
+          content-endpoint: developer
+        name: content-deploy-key
+  - name: invoiceauto_html_repo_host
+  - name: invoiceauto_ui_deployer
+  - name: uaa_invoiceauto
+resources:
+- name: invoiceauto-db
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hana
+    service-plan: hdi-shared
+- name: invoiceauto_html_repo_runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
+- name: uaa_invoiceauto
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: invoiceauto-xsuaa-service
+    service-plan: application
+- name: invoiceauto_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-host
+- name: cpapp-connectivity
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: connectivity
+    service-plan: lite
+- name: invoiceauto-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          existing_destinations_policy: update
+      version: 1.0.0
+    service: destination
+    service-name: invoiceauto-destination-service
+    service-plan: lite
+- name: DataIntelligence-flp
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: build-workzone-standard
+    service-plan: standard
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm i
+    - npx cds build --production

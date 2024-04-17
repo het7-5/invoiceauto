@@ -1,0 +1,170 @@
+{
+  "_version": "1.59.0",
+  "sap.app": {
+    "id": "autoinvoicedashboard",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.13.1",
+      "toolsId": "5b37a282-6fa9-4354-a503-00849c989281"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/srv/odata/v4/invoice/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.0"
+        }
+      },
+      "API_SUPPLIERINVOICE_PROCESS": {
+        "uri": "/onpremsrv/sap/opu/odata/sap/API_SUPPLIERINVOICE_PROCESS_SRV",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "2.0"
+        }
+      }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "com.deloitte.DataIntelligence": {
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          },
+          "semanticObject": "DataIntelligence",
+          "action": "display",
+          "title": "Invoice Dashboard",
+          "subTitle": "Dashboard Showing Extrated Invoices",
+          "icon": "sap-icon://activities"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.122.1",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.f": {},
+        "sap.suite.ui.generic.template": {},
+        "sap.ui.comp": {},
+        "sap.ui.generic.app": {},
+        "sap.ui.table": {},
+        "sap.ushell": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "autoinvoicedashboard.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "supplierModel": {
+        "dataSource": "API_SUPPLIERINVOICE_PROCESS",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "viewType": "XML",
+        "async": true,
+        "viewPath": "autoinvoicedashboard.view",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "clearControlAggregation": false
+      },
+      "routes": [
+        {
+          "pattern": "",
+          "name": "Dashboard",
+          "target": [
+            "Dashboard"
+          ]
+        },
+        {
+          "pattern": "Detail/{invoicePath}",
+          "name": "Detail",
+          "target": [
+            "Detail"
+          ]
+        }
+      ],
+      "targets": {
+        "Dashboard": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Dashboard",
+          "viewName": "Dashboard"
+        },
+        "Detail": {
+          "viewType": "XML",
+          "viewName": "Detail",
+          "viewId": "Detail"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "autoinvoicedashboard.view.App",
+      "type": "XML",
+      "async": true,
+      "id": "App"
+    }
+  }
+}

@@ -1,0 +1,81 @@
+{
+	"_version": "3.0.0",
+	"identification": {
+		"id": "95120042-b5df-446c-8d46-e1ffc9e99cb2",
+		"entityType": "bundle"
+	},
+	"payload": {
+		"catalogs": [{
+			"_version": "3.0.0",
+			"identification": {
+				"id": "defaultCatalogId",
+				"title": "{{title}}",
+				"entityType": "catalog",
+				"i18n": "i18n/defaultCatalogId.properties"
+			},
+			"payload": {
+				"viz": []
+			}
+		}],
+		"groups": [{
+			"_version": "3.0.0",
+			"identification": {
+				"id": "defaultGroupId",
+				"title": "{{title}}",
+				"entityType": "group",
+				"i18n": "i18n/defaultGroupId.properties"
+			},
+			"payload": {
+				"viz": []
+			}
+		}, {
+			"_version": "3.0.0",
+			"identification": {
+				"id": "data-intelligence",
+				"title": "{{title}}",
+				"entityType": "group",
+				"i18n": "i18n/data-intelligence.properties"
+			},
+			"payload": {
+				"viz": [{
+					"id": "autoinvoicedashboard-0-1713352169208",
+					"appId": "autoinvoicedashboard",
+					"vizId": "DataIntelligence-display"
+				}]
+			}
+		}],
+		"sites": [{
+			"_version": "3.0.0",
+			"identification": {
+				"id": "dfdb2dc6-ba7a-42ed-a2a4-d8e8bdbbe07a",
+				"entityType": "site",
+				"title": "SAP Fiori launchpad site on Cloud Foundry",
+				"description": "SAP Fiori launchpad site on Cloud Foundry, deployed from WING"
+			},
+			"payload": {
+				"config": {
+					"ushellConfig": {
+						"renderers": {
+							"fiori2": {
+								"componentData": {
+									"config": {
+										"applications": {
+											"Shell-home": {}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"groupsOrder": ["defaultGroupId", "data-intelligence"],
+				"sap.cloud.portal": {
+					"config": {
+						"theme.id": "sap_fiori_3",
+						"theme.active": ["sap_fiori_3", "sap_fiori_3_dark", "sap_belize_hcb", "sap_belize_hcw"]
+					}
+				}
+			}
+		}]
+	}
+}

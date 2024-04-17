@@ -1,0 +1,8 @@
+POST http://localhost:4004/odata/v4/invoice/InvoiceDocument
+Content-Type:application/json
+slug:application/pdf
+
+{
+    "fileName":"test.pdf",
+    "content":"BaseString"
+}
