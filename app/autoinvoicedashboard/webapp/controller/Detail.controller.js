@@ -22,7 +22,7 @@ sap.ui.define([
 
 				BusyIndicator.show();
 				$.get({
-					url: "/srv/odata/v4/invoice/" + sPath + "?$expand=invoiceItems",
+					url: oModel.sServiceUrl + sPath + "?$expand=invoiceItems",
 					success: function (oData) {
 						BusyIndicator.hide();
 						oViewModel.setProperty("/InvoiceDetails", oData);
@@ -62,7 +62,7 @@ sap.ui.define([
 			oModel.create("/A_SupplierInvoice", oPayload, {
 				success: function (oData) {
 					BusyIndicator.hide();
-					messenger.success(oResourceBundle.getText("INVOICE_CREATE_SUCCESS_MSG"));
+					messenger.success(oResourceBundle.getText("INVOICE_CREATE_SUCCESS_MSG",oData.SupplierInvoice));
 				}.bind(this),
 				error: function (oError) {
 					BusyIndicator.hide();

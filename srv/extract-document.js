@@ -3,6 +3,8 @@ const FormData = require('form-data');
 const fs = require('fs');
 const { Readable } = require('stream');
 
+ //Extraction API inforamtion , chargable hence commented as on 18-04-2024
+
 const documentExtractionService = {
   url: 'https://aiservices-dox.cfapps.eu10.hana.ondemand.com',
   // OAuth endpoint from your service key:
