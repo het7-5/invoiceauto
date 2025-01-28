@@ -13,4 +13,9 @@ service invoiceService {
         Status : String;
         JobId : String;
     };
+    action updateStatus(invoiceNumber : String) returns {
+        supplierInvoiceNumber:String;
+        error:String;
+    };
+    action getVendor() returns {value:String};
 }

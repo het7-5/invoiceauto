@@ -34,10 +34,13 @@ entity Invoices {
         url             : String;
         paymentTerms    : String;
         bankAccountNo   : String;
+        attachmentId:Integer;
         // bankDetails     : Association to many Banks
         //                       on bankDetails.invoiceNo = invoiceNo;
         invoiceItems    : Composition of many InvoiceItems
                               on invoiceItems.invoiceNo = $self;
+        documents       : Association to many Attachments
+                              on documents.ID = $self.attachmentId;
 }
 
 entity InvoiceItems {
@@ -52,22 +55,15 @@ entity InvoiceItems {
         currency           : Currency;
 }
 
-// entity Banks {
-//     key bankId            : UUID;
-//         invoiceNo         : String;
-//         bankName          : String;
-//         bankAccountNo     : String;
-//         ifscCode          : String;
-//         accountHolderName : String;
-// }
 
 entity Attachments {
     key ID        : Integer;
 
-        @Core.MediaType                  : mediaType
+        // @Core.MediaType                  : mediaType
         @Core.ContentDisposition.Filename: fileName
         content   : LargeString;
         mediaType : String @Core.IsMediaType;
         url       : String;
         fileName  : String;
+
 }

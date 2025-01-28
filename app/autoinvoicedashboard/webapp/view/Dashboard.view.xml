@@ -10,8 +10,7 @@
 						<fb:filterGroupItems>
 							<fb:FilterGroupItem id="_IDGenFilterGroupItem1" name="InvoiceNumber" label="Invoice Number" groupName="Group1" visibleInFilterBar="true">
 								<fb:control>
-									<Input id="idInvoiceNumberInput"  placeholder="Invoice Number" />
-										
+									<Input id="idInvoiceNumberInput"  placeholder="Invoice Number" />						
 								</fb:control>
 							</fb:FilterGroupItem>
 							<fb:FilterGroupItem id="_IDGenFilterGroupItem2" name="VendorNumber" label="Vendor Number" groupName="Group1" visibleInFilterBar="true">
@@ -40,7 +39,7 @@
 			</f:DynamicPageHeader>
 		</f:header>
 		<f:content>
-			<Table id="idInvoiceTable"  inset="false" items="{ path: '/Invoices' }" alternateRowColors="true" enableBusyIndicator="true">
+			<Table id="idInvoiceTable"  inset="false" items="{ path: '/Invoices',parameters: { $expand: 'documents'}  }" alternateRowColors="true" enableBusyIndicator="true">
 				<columns>
 					<Column id="_IDGenColumn1" minScreenWidth="Tablet" demandPopin="true">
 						<Label id="_IDGenLabel1" text="Invoice Number" design="Bold"/>
@@ -72,8 +71,8 @@
 							<Text id="_IDGenText2" text="{companyName}"/>
 							<Text id="_IDGenText3" text="{invoiceDate}"/>
 							<Text id="_IDGenText4" text="{poNumber}"/>
-							<Text id="_IDGenText5" text="{status}"/>
-							<Link id="_IDGenLink1" text="Download" press="handleDownloadPress" app:url="{url}"/>
+							<ObjectStatus id="_IDGenText5" text="{status}" inverted="true" state="Success"/>
+							<Link id="_IDGenLink1" text="Download" press="handleDownloadPress" app:url="{documents/0/url}"/>
 						</cells>
 					</ColumnListItem>
 				</items>

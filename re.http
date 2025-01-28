@@ -6,3 +6,20 @@ slug:application/pdf
     "fileName":"test.pdf",
     "content":"BaseString"
 }
+###
+
+POST http://localhost:4004/odata/v4/invoice/updateStatus
+Content-Type:application/json
+
+{
+    "invoiceNumber":"DMI/23-24/056"
+}
+###
+
+PATCH http://localhost:37925/odata/v4/invoice/Invoices('DMI%2F23-24%2F056')
+Content-Type:application/json
+
+{"status": "Approved at level 1"}
+###
+POST http://localhost:4004/odata/v4/invoice/getVendor
+Content-Type:application/json

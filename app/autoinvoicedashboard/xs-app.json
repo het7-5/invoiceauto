@@ -3,6 +3,13 @@
   "authenticationMethod": "route",
   "routes": [
     {
+      "source": "/sbpa/(.*)$",
+      "target": "$1",
+      "destination": "sap_process_automation_service_user_access",
+      "authenticationType": "none",
+      "csrfProtection": false
+    },
+    {
       "source": "^/srv/(.*)$",
       "target": "$1",
       "destination": "srv-api",

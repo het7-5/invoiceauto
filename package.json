@@ -6,10 +6,15 @@
     "license": "UNLICENSED",
     "private": true,
     "dependencies": {
+        "@sap-cloud-sdk/core": "^1.54.2",
+        "@sap-cloud-sdk/http-client": "^3.20.0",
+        "@sap-cloud-sdk/resilience": "^3.20.0",
         "@sap/cds": "^7",
         "@sap/cds-hana": "^2",
         "@sap/hdi-deploy": "^5.1.1",
+        "@sap/xsenv": "^5.1.0",
         "@sap/xssec": "^3.6.1",
+        "axios": "^1.7.2",
         "express": "^4"
     },
     "devDependencies": {
@@ -25,7 +30,7 @@
     },
     "cds": {
         "requires": {
-            "auth": "xsuaa",
+            "auth": "mocked",
             "db": "hana"
         }
     }

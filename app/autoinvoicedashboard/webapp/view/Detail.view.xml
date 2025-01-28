@@ -22,17 +22,17 @@
 						<Text id="_IDGenText6" text="{viewModel>customerAddress}"/>
 						<core:Title id="_IDGenTitle2" text=""/>
 						<Label id="_IDGenLabel7" text="PAN Number" design="Bold"/>
-						<Text id="_IDGenText7" text="{viewModel>panNo}"/>
+						<Input id="_IDGenText7" value="{viewModel>panNo}"/>
 						<Label id="_IDGenLabel8" text="GST Number" design="Bold"/>
-						<Text id="_IDGenText8" text="{viewModel>gstNo}"/>
+						<Input id="_IDGenText8" value="{viewModel>gstNo}"/>
 						<Label id="_IDGenLabel9" text="Customer Name" design="Bold"/>
 						<Text id="_IDGenText9" text="{viewModel>customername}"/>
 						<Label id="_IDGenLabel10" text="Customer Address" design="Bold"/>
 						<Text id="_IDGenText10" text="{viewModel>customerAddress}"/>
 						<Label id="_IDGenLabel11" text="GSTIN" design="Bold"/>
-						<Text id="_IDGenText11" text="{viewModel>gstin}"/>
+						<Text id="_IDGenText11" text="27AABCS1728D1ZO"/>
 						<Label id="_IDGenLabel12" text="Grand Total" design="Bold"/>
-						<Text id="_IDGenText12" text="{viewModel>grandTotal}"/>
+						<Text id="_IDGenText12" text="{viewModel>grandTotal} INR"/>
 					</f:content>
 				</f:SimpleForm>
 			</uxap:headerContent>
@@ -80,7 +80,7 @@
 					<uxap:subSections>
 						<uxap:ObjectPageSubSection id="_IDGenObjectPageSubSection2">
 							<uxap:blocks>
-								<Table id="idBankDetailTable" inset="false" items="{ path: 'viewModel>/InvoiceDetails/bankDetails' }" alternateRowColors="true"
+								<Table id="idBankDetailTable" inset="false" alternateRowColors="true"
 									class="sapUiSmallMarginTop" growing="true" growingThreshold="5">
 									<columns>
 										<Column id="_IDGenColumn6" minScreenWidth="Tablet" demandPopin="true">
@@ -99,10 +99,10 @@
 									<items>
 										<ColumnListItem id="_IDGenColumnListItem2" vAlign="Middle">
 											<cells>
-												<ObjectIdentifier id="_IDGenObjectIdentifier2" title="{viewModel>bankAccountNo}"/>
-												<Text id="_IDGenText17" text="{viewModel>bankName}"/>
-												<Text id="_IDGenText18" text="{viewModel>accountHolderName}"/>
-												<Text id="_IDGenText19" text="{viewModel>ifscCode}"/>
+												<ObjectIdentifier id="_IDGenObjectIdentifier2" title="10071733214"/>
+												<Text id="_IDGenText17" text="IDFC FIRST BANK LIMITED"/>
+												<Text id="_IDGenText18" text="Digital Maven India"/>
+												<Text id="_IDGenText19" text="IDFB0040159"/>
 											</cells>
 										</ColumnListItem>
 									</items>
@@ -116,7 +116,8 @@
 		<footer>
 			<OverflowToolbar id="_IDGenOverflowToolbar1">
 				<ToolbarSpacer id="_IDGenToolbarSpacer1"/>
-				<Button id="idCreateBtn" text="Create Invoice" press="onCreateInvoiceBtnPress" type="Emphasized"/>
+				<!-- <Button id="idCreateBtn" text="Create Invoice" press="onCreateInvoiceBtnPress" type="Emphasized"/> -->
+				<Button id="idSendForApproval" text="Send for Approval" press="onSendForAppBtnPress" type="Emphasized" visible="{=${viewModel>/InvoiceDetails/status} ==='Extraction Completed' ? true:false}"/>
 				<Button id="idBackBtn" text="Back" press="onNavBack"/>
 			</OverflowToolbar>
 		</footer>

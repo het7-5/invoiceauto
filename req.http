@@ -1,1 +1,7 @@
-GET http://localhost:3807/odata/v4/invoice/Attachments
+POST http://localhost:4004/odata/v4/invoice/InvoiceDocument
+Content-Type: application/json
+
+{
+    "fileName":"data.pdf",
+    "content":"SGVsbG8K"
+}

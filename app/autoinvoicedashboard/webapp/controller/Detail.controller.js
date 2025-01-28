@@ -25,6 +25,7 @@ sap.ui.define([
 					url: oModel.sServiceUrl + sPath + "?$expand=invoiceItems",
 					success: function (oData) {
 						BusyIndicator.hide();
+						this.byId("idSendForApproval").setVisible(true);
 						oViewModel.setProperty("/InvoiceDetails", oData);
 					}.bind(this),
 					error: function (oError) {
@@ -75,6 +76,51 @@ sap.ui.define([
 					}	
 				}.bind(this)
 			});
+		},
+		onSendForAppBtnPress: function(oEvent) {
+			var oResourceBundle = this.getResourceBundle(),
+				sTitle = oResourceBundle.getText("CONFIRM_TITLE"),
+				sText = oResourceBundle.getText("CONFIRM_TXT_SEND_APPROVAL");
+			messenger.confirm(sTitle, sText, "Confirm", null, function () {
+				this.sendForApproval();
+			}.bind(this));
+		},
+		sendForApproval: function() {
+			BusyIndicator.show();
+			var settings = {
+				"url": "/sbpa/workflow/rest/v1/workflow-instances",
+				"method": "POST",
+				"timeout": 0,
+				"headers": {
+				  "Content-Type": "application/json",
+				},
+				"data": JSON.stringify({
+				  "definitionId": "eu10.etp-data-intelligence-ro56rww1.invoiceapprovalworkflow.invoiceApproval",
+				  "context": {
+					"invoiceNumber": "DMI/23-24/056",
+					"invoiceAmount": ""
+				  },
+				  success: function(oResp) {
+					debugger;
+				  },
+				  error: function(oError) {
+					debugger
+				  }
+				}),
+			  };
+			   
+			  var that = this;
+			  $.ajax(settings).done(function (response) {
+				if(response.id) {
+					BusyIndicator.hide();
+					messenger.success("Request sent for approval", function() {
+						that.byId("idSendForApproval").setVisible(false);
+					});
+				} else {
+					BusyIndicator.hide();
+					messenger.error("Something went wrong while sending for an approval. Please contact administrator");
+				}
+			  });
 		}
 	});
 });
