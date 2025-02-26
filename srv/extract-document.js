@@ -10,8 +10,8 @@ const documentExtractionService = {
   // OAuth endpoint from your service key:
   authUrl: 'https://etp-data-intelligence-ro56rww1.authentication.eu10.hana.ondemand.com/oauth/token',
   // Client ID and Secret from your service key:
-  clientId: 'sb-ce6caa6f-a063-412b-812c-188d279a76a3!b437280|na-f20548c0-157d-417b-8bbb-1c9f35ecfb2d!b20821',
-  clientSecret: '21118790-fe49-4267-a63d-68845220606a$CHMXc3dmgTx1ZlmmhkflWid6mcMJX9xfJXGJptxw6io='
+  clientId: '',
+  clientSecret: ''
 };
 
 // Function to handle the document information extraction.

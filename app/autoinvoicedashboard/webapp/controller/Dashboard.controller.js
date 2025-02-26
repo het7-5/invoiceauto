@@ -72,9 +72,9 @@ sap.ui.define([
 			}
 			oTable.getBinding("items").filter(aFilters);
 			if (aFilters.length === 0) {
-				es", this.byId("_IDGenColumnListItem1"));
+				this.byId("idInvoiceTable").bindAggregation("items", "/Invoices", this.byId("_IDGenColumnListItem1"));
 			}
-		},this.byId("idInvoiceTable").bindAggregation("items", "/Invoic
+		},
 		handleDownloadPress: function (oEvent) {
 			this.getView().setBusy(true);
 			var oModel = this.getModel(),
