@@ -1,5 +1,6 @@
 # Getting Started
 CAPM with Gen-AI 
+
 contains these folders and files, following our recommended project layout:
 
 File or Folder | Purpose
